@@ -6,6 +6,9 @@ This project focuses on the analysis and visualization of trajectories of celest
 
 It leverages the SpiceyPy library to work with precise ephemeris data provided by NASA.
 
+The project specifically analyzes the final phase of the
+Cassini–Huygens (2017)
+
 ---
 
 ## 👩‍💻 Author
@@ -55,11 +58,21 @@ data/kernels/
 
 The project uses generic kernels provided by NASA NAIF:
 
-- naif0012.tls — leap seconds
-
+### Time
+- naif0012.tls — time conversion 
+### Planetary data 
 - pck00011.tpc — planetary constants
+- de442s.bsp — planetary ephemerides
+- sat458.bsp — Saturn system (including its moons)
+### Cassini trajectory (2017)
+- 200128RU_SCPSE_17098_17126.bsp
+- 200128RU_SCPSE_17126_17158.bsp
+- 200128RU_SCPSE_17158_17177.bsp
+- 200128RU_SCPSE_17177_17208.bsp
+- 200128RU_SCPSE_17208_17235.bsp
+- 200128RU_SCPSE_17235_17258.bsp
 
-- de440s.bsp — planetary ephemerides
+All kernels are loaded using a meta-kernel (meta.tm)
 
 ## ▶️ Running the Project
 
