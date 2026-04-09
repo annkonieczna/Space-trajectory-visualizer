@@ -1,5 +1,10 @@
 #This file contains all of the constants neccessary for this project 
+from pathlib import Path 
 
+#used paths 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+KERNEL_DIR = PROJECT_ROOT / "data" / "kernels"
+META_KERNEL = KERNEL_DIR / "meta.tm"
 
 #time settings 
 DEFAULT_START_UTC = "2017-04-22T00:00:00" #T as a seperator between date and an hour 
