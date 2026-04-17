@@ -6,9 +6,6 @@ from time_utilis import et_to_utc
 from config import DEFAULT_FRAME,DEFAULT_ABCORR
 from typing import cast
 
-#Function that deteminess the state of our targetin reference too the observer for a specific moment in time  
-#It returns a vector [x,y,z,vx,vy,vz] (position and velocity vector), and float light_time-- one way light time between the observer and target in seconds 
-#Units are km and km/sec and sec 
 
 def get_state_at_epoch(
         target: str, 
@@ -17,6 +14,9 @@ def get_state_at_epoch(
         frame: str = DEFAULT_FRAME, 
         abcorr: str  = DEFAULT_ABCORR,
 ) -> tuple[np.ndarray,float]:
+    '''Function that detemines the state of our targetin reference too the observer for a specific moment in time  
+    It returns a vector [x,y,z,vx,vy,vz] (position and velocity vector), and float light_time-- one way light time between the observer and target in seconds 
+    Units are km and km/sec and sec '''
     state, light_time = spice.spkezr(target,et,frame,abcorr,observer)
     return np.array(state),cast(float,light_time) 
         
@@ -29,6 +29,7 @@ def get_states_over_time(
         frame: str = DEFAULT_FRAME,
         abcorr: str = DEFAULT_ABCORR,
 ) -> tuple[np.ndarray,np.ndarray]:
+    '''The same function as above but for a period of time'''
     states = []
     light_times = []
     for et in ets: 
