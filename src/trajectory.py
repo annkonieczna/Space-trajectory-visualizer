@@ -24,15 +24,15 @@ def get_state_at_epoch(
 
 def get_states_over_time(
         target: str,
-        observer: str,
         ets: np.ndarray,
+        observer: str,
         frame: str = DEFAULT_FRAME,
         abcorr: str = DEFAULT_ABCORR,
 ) -> tuple[np.ndarray,np.ndarray]:
     states = []
     light_times = []
     for et in ets: 
-        state, lt = get_state_at_epoch(target,et,frame,abcorr,observer)
+        state, lt = get_state_at_epoch(target,et,observer,frame,abcorr)
         states.append(state)
         light_times.append(lt)
     return np.array(states),np.array(light_times)
