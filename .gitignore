@@ -1,3 +1,7 @@
 .venv
 data/kernels/*
 !data/kernels/meta.tm
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
