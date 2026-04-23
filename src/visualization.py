@@ -2,6 +2,9 @@ from pathlib import Path
 import pandas as pd 
 import plotly.graph_objects as go
 
+
+def ensure_output_dir(path:Path)-> None:
+    path.mkdir(parents=True,exist_ok=True)
 def plot_trajectory_3d(df: pd.DataFrame,title:str,output_path: Path) -> None:
     fig = go.Figure() # creating an empty Figure 
     fig.add_trace( # add to the plot trace of the trajectory 
@@ -41,4 +44,6 @@ def plot_trajectory_3d(df: pd.DataFrame,title:str,output_path: Path) -> None:
         )
     )
     fig.write_html(str(output_path))
+
+
 
