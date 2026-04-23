@@ -21,7 +21,7 @@ def plot_trajectory_3d(df: pd.DataFrame,title:str,output_path: Path) -> None:
             x = [df["x_km"].iloc[0]], # the extra brackets bc in plotly we're required to give an array of points
             y = [df["y_km"].iloc[0]],
             z = [df["z_km"].iloc[0]],
-            mode= "marker",
+            mode= "markers",
             name="Start"
         )
     )
@@ -30,7 +30,7 @@ def plot_trajectory_3d(df: pd.DataFrame,title:str,output_path: Path) -> None:
             x = [df["x_km"].iloc[-1]],
             y = [df["y_km"].iloc[-1]],
             z = [df["z_km"].iloc[-1]],
-            mode="marker",
+            mode="markers",
             name= "End"
         )
     )
