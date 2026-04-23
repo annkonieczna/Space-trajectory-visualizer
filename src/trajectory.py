@@ -42,8 +42,8 @@ def build_trajectory_dataframe(
     target: str,
     observer: str,
     ets: np.ndarray,
-    frame: str = "J2000",
-    abcorr: str = "NONE",
+    frame: str = DEFAULT_FRAME,
+    abcorr: str = DEFAULT_ABCORR,
 ) -> pd.DataFrame:
     """
     Build DataFrame with position, velocity and distance.
