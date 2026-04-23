@@ -13,7 +13,7 @@ DEFAULT_STEP_IN_SECONDS = 3600
 
 #Reference frame 
 
-DEFAULT_FRAME = "J2000" # reference frame I'll be using most of the time, it's an inertial refernce frame 
+DEFAULT_FRAME = "J2000" #reference frame I'll be using most of the time, it's an inertial reference frame 
 #so it's useful for calculating most of the 
 DEFAULT_ABCORR = "NONE" #the aberration correction we want to apply 
 #in my case I want to have the geometrical state of the object relative to the observer 

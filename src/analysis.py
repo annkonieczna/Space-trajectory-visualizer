@@ -1,13 +1,15 @@
 import pandas as pd
 from typing import cast
 
+SECONDS_IN_A_DAY:float = 86400.0 # number of seconds in a day 
+
 def add_relative_days(df: pd.DataFrame) -> pd.DataFrame:
     """
     Adds column with a number of days from the beggining of the analysis
     """
     df = df.copy()
     start_et = df["et"].iloc[0]
-    df["days_from_start"] = (df["et"] - start_et) / 86400.0
+    df["days_from_start"] = (df["et"] - start_et) / SECONDS_IN_A_DAY
     return df
 
 
