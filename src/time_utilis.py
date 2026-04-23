@@ -12,7 +12,7 @@ def et_to_utc(et: float, format_str: str = "ISOC",  prec: int = 3) -> str: #ISOC
     '''the oppsite conversion '''
     return cast(str,spice.et2utc(et,format_str,prec))
 
-def generate_et_range(utc_start:str,utc_end:str,step_seconds:int): 
+def generate_et_range(utc_start:str,utc_end:str,step_seconds:int) -> np.ndarray: 
     '''Generates range of time in ET format'''
     start = utc_to_et(utc_start)
     stop = utc_to_et(utc_end)
