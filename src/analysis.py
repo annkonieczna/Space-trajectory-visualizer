@@ -33,8 +33,8 @@ def build_distance_dataframe(df_a: pd.DataFrame,df_b:pd.DataFrame, label: str) -
     '''Function that is given dwo dataframes and it calculates the distance between 
     two objects in the same reference frame and are relative to the same observer  
     data frame looks like: et utc x y z'''
-    coords_a = df_a[["x_km,y_km,z_km"]].to_numpy()
-    coords_b = df_b[["x_km,y_km,z_km"]].to_numpy()
+    coords_a = df_a[["x_km","y_km","z_km"]].to_numpy()
+    coords_b = df_b[["x_km","y_km","z_km"]].to_numpy()
     distances = np.linalg.norm(coords_a-coords_b,axis=1) #calculates difference between vectors for every row
     new_df = pd.DataFrame(
         {

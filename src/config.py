@@ -8,7 +8,7 @@ META_KERNEL = KERNEL_DIR / "meta.tm"
 
 #time settings 
 DEFAULT_START_UTC = "2017-04-22T00:00:00" #T as a seperator between date and an hour 
-DEFAULT_END_UTC = "2017-09-15T00:00:00"
+DEFAULT_END_UTC = "2017-09-15T10:00:00"
 DEFAULT_STEP_IN_SECONDS = 3600
 
 #Reference frame 
