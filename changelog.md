@@ -29,12 +29,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Organized constants related to time settings, reference frame, and object names into a dedicated configuration module.
 
-- * [feat]  Change trajectory file to make it work for plotting the results
+- [feat]  Change trajectory file to make it work for plotting the results
 ([#4])
 
 [#4]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/4
 
-- * [feat]  Change analysis file, add dataframe for keeping the results 
+- [feat]  Change analysis file, add dataframe for keeping the results 
 ([#8])
 
 [#8]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/4
