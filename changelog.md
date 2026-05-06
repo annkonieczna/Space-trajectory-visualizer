@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Kernel loading and clearing utilities using SpiceyPy.
 - Time conversion utilities between UTC and Ephemeris Time (ET).
 - State vector utilities for retrieving position and velocity from SPICE.
+
+### Changed
+- Organized constants related to time settings, reference frame, and object names into a dedicated configuration module.
+
+
+## [1.1.1]
+
+### Added
 - [feat] Working trajectory for the spacecraft ([#3])
 
 [#3]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/3
@@ -27,8 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#11]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/10
 
 ### Changed
-- Organized constants related to time settings, reference frame, and object names into a dedicated configuration module.
-
 - [feat]  Change trajectory file to make it work for plotting the results
 ([#4])
 
@@ -40,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#8]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/4
 
 
-### Fixed
+
+
 
 
 ### Notes
