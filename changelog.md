@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Organized constants related to time settings, reference frame, and object names into a dedicated configuration module.
 
 
-## [1.1.1]
+## [1.1.1] - 1-05-2026
 
 ### Added
 - [feat] Working trajectory for the spacecraft ([#3])
@@ -44,10 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#8])
 
 [#8]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/4
-
-
-
-
 
 
 ### Notes
