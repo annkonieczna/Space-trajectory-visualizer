@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 import plotly.graph_objects as go
 from itertools import cycle
+from bodies import BodyEllipsoid, create_ellipsoid_mesh
 
 starting_point_colours = cycle(
     {"Green": "#87de63", "Dark_green": "#1a8b3d", "Blue": "#77d5fe"}.values()
@@ -18,8 +19,16 @@ def ensure_output_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 
-def plot_trajectory_3d(df: pd.DataFrame, title: str, output_path: Path) -> None:
+def plot_trajectory_3d(
+    df: pd.DataFrame,
+    title: str,
+    output_path: Path,
+    central_body: BodyEllipsoid | None = None,
+    central_body_scale: float = 1.0,
+) -> None:
     fig = go.Figure()  # creating an empty Figure
+    if central_body is not None:
+        add_body_ellipsoid_trace(fig, ellipsoid=central_body, scale=central_body_scale)
     fig.add_trace(  # add to the plot trace of the trajectory
         go.Scatter3d(
             x=df["x_km"],
@@ -71,8 +80,12 @@ def plot_two_trajectories_3d(
     title_b: str,
     title: str,
     output_path: Path,
-):
+    central_body: BodyEllipsoid | None = None,
+    central_body_scale: float = 1.0,
+) -> None:
     fig = go.Figure()
+    if central_body is not None:
+        add_body_ellipsoid_trace(fig, ellipsoid=central_body, scale=central_body_scale)
     # plotting object A
     fig.add_trace(
         go.Scatter3d(
@@ -147,3 +160,34 @@ def plot_two_trajectories_3d(
         ),
     )
     fig.write_html(str(output_path))
+
+
+def add_body_ellipsoid_trace(
+    fig: go.Figure,
+    ellipsoid: BodyEllipsoid,
+    color: str = "gold",
+    opacity: float = 1.0,
+    scale: float = 1.0,
+    number_of_points: int = 100,
+) -> None:
+    x, y, z = create_ellipsoid_mesh(
+        ellipsoid, number_of_points=number_of_points, scale=scale
+    )
+    fig.add_trace(
+        go.Surface(
+            x=x,
+            y=y,
+            z=z,
+            name=ellipsoid.name,
+            showscale=False,
+            opacity=opacity,
+            colorscale=[[0, color], [1, color]],
+            hovertemplate=(
+                f"{ellipsoid.name}<br>"
+                "x=%{x:.0f} km<br>"
+                "y=%{y:.0f} km<br>"
+                "z=%{z:.0f} km"
+                "<extra></extra>"
+            ),
+        )
+    )
