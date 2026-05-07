@@ -28,6 +28,7 @@ def get_body_radii(body_name: str) -> np.ndarray:
     _, radii = spice.bodvrd(body_name, "RADII", 3)
     return np.array(radii, dtype=float)
 
+
 def build_body_ellipsoid(
     body_name: str, center_km: tuple[float, float, float] = (0, 0, 0)
 ) -> BodyEllipsoid:
@@ -36,3 +37,19 @@ def build_body_ellipsoid(
     return BodyEllipsoid(name=body_name, center_km=center_km, radii_km=radii)
 
 
+def create_ellipsoid_mesh(
+    ellipsoid: BodyEllipsoid, number_of_points: int = 100, scale: float = 1.0
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Function responsible for scaling the radius of the planet and creating  x, y, z mesh arrays for plotting a triaxial ellipsoid."""
+    rx, ry, rz = ellipsoid.radii_km * scale  # radious points
+    cx, cy, cz = ellipsoid.center_km  # center points
+    u = np.linspace(
+        0, 2 * np.pi, number_of_points
+    )  # angle of rotation around the Z axis
+    v = np.linspace(
+        0, np.pi, number_of_points
+    )  # transition angle from the North Pole to the South Pole
+    x = cx + rx * (np.outer(np.cos(u), np.sin(v)))  # spherical coordinates
+    y = cy + ry * (np.outer(np.sin(u), np.sin(v)))
+    z = cz + rz * np.outer(np.cos(v), np.ones_like(u))
+    return x, y, z
