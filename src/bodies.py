@@ -28,4 +28,11 @@ def get_body_radii(body_name: str) -> np.ndarray:
     _, radii = spice.bodvrd(body_name, "RADII", 3)
     return np.array(radii, dtype=float)
 
+def build_body_ellipsoid(
+    body_name: str, center_km: tuple[float, float, float] = (0, 0, 0)
+) -> BodyEllipsoid:
+    """Function responsible for cleating an ellipsoid object"""
+    radii = get_body_radii(body_name)
+    return BodyEllipsoid(name=body_name, center_km=center_km, radii_km=radii)
+
 
