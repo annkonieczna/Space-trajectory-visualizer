@@ -51,5 +51,5 @@ def create_ellipsoid_mesh(
     )  # transition angle from the North Pole to the South Pole
     x = cx + rx * (np.outer(np.cos(u), np.sin(v)))  # spherical coordinates
     y = cy + ry * (np.outer(np.sin(u), np.sin(v)))
-    z = cz + rz * np.outer(np.cos(v), np.ones_like(u))
+    z = cz + rz * np.outer( np.ones_like(u), np.cos(v))
     return x, y, z
