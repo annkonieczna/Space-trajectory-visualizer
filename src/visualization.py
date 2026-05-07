@@ -4,13 +4,13 @@ import plotly.graph_objects as go
 from itertools import cycle
 
 starting_point_colours = cycle(
-    {"Green": "#87de63", "Dark_green": "#1a8b3d", "Blue": "#77d5fe"}
+    {"Green": "#87de63", "Dark_green": "#1a8b3d", "Blue": "#77d5fe"}.values()
 )
 ending_point_colours = cycle(
-    {"Red": "#ef5e38", "Orange": "#ffb10b", "Violet": "#940bff"}
+    {"Red": "#ef5e38", "Orange": "#ffb10b", "Violet": "#940bff"}.values()
 )
 trajectory_colours = cycle(
-    {"Dark_blue": "#493fff", "Yellow": "#fff527", "Pink": "#ff72fe"}
+    {"Dark_blue": "#493fff", "Yellow": "#fff527", "Pink": "#ff72fe"}.values()
 )
 
 
@@ -70,7 +70,7 @@ def plot_two_trajectories_3d(
     title_a: str,
     title_b: str,
     title: str,
-    outputPath: Path,
+    output_path: Path,
 ):
     fig = go.Figure()
     # plotting object A
@@ -146,4 +146,4 @@ def plot_two_trajectories_3d(
             aspectmode="data",  #  it keeps the proportions consistent with the data
         ),
     )
-    fig.write_html(str(outputPath))
+    fig.write_html(str(output_path))
