@@ -26,6 +26,7 @@ from visualization import (
     plot_two_trajectories_3d,
     ensure_output_dir,
 )
+from bodies import build_body_ellipsoid
 
 
 def main() -> None:
@@ -45,14 +46,23 @@ def main() -> None:
         cassini_titan_distance_df = build_distance_dataframe(
             cassini_df, titan_df, "Cassini-Titan"
         )
-        plot_trajectory_3d(cassini_df, "Cassini", output_dir / "Cassini_3d.html")
+        saturn_body = build_body_ellipsoid(
+            body_name=SATURN_NAME, center_km=(0.0, 0.0, 0.0)
+        )
+        plot_trajectory_3d(
+            df=cassini_df,
+            title="Cassini",
+            output_path=output_dir / "Cassini_3d.html",
+            central_body=saturn_body,
+        )
         plot_two_trajectories_3d(
-            cassini_df,
-            titan_df,
-            "Trajektoria Cassini",
-            "Trajektoria Tytana",
-            "Wspólna trajektoria Cassini i Tyttana względem Saturna",
-            output_dir / "Cassini-Titan3d.html",
+            df_a=cassini_df,
+            df_b=titan_df,
+            title_a="Trajektoria Cassini",
+            title_b="Trajektoria Tytana",
+            title="Wspólna trajektoria Cassini i Tyttana względem Saturna",
+            output_path=output_dir / "Cassini-Titan3d.html",
+            central_body=saturn_body,
         )
         print("Analysis complete.Figures saved to output/figures")
     finally:
