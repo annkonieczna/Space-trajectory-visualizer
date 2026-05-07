@@ -103,7 +103,7 @@ def plot_two_trajectories_3d(
             y=[df_a["y_km"].iloc[0]],
             z=[df_a["z_km"].iloc[0]],
             mode="markers",
-            name="Start",
+            name=f"{title_a} Start",
             marker_color=next(starting_point_colours),
         )
     )
@@ -113,7 +113,7 @@ def plot_two_trajectories_3d(
             y=[df_a["y_km"].iloc[-1]],
             z=[df_a["z_km"].iloc[-1]],
             mode="markers",
-            name="End",
+            name=f"{title_a} End",
             marker_color=next(ending_point_colours),
         )
     )
@@ -135,7 +135,7 @@ def plot_two_trajectories_3d(
             y=[df_b["y_km"].iloc[0]],
             z=[df_b["z_km"].iloc[0]],
             mode="markers",
-            name="Start",
+            name=f"{title_b} Start",
             marker_color=next(starting_point_colours),
         )
     )
@@ -145,7 +145,7 @@ def plot_two_trajectories_3d(
             y=[df_b["y_km"].iloc[-1]],
             z=[df_b["z_km"].iloc[-1]],
             mode="markers",
-            name="End",
+            name=f"{title_b} End",
             marker_color=next(ending_point_colours),
         )
     )
