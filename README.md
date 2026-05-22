@@ -80,6 +80,16 @@ After setup and downloading kernels:
 ```bash
 python src/main.py
 ```
+## Code quality
+
+This project uses `prek`, a Rust-based drop-in replacement for `pre-commit`, to run formatting and linting checks.
+
+Install prek:
+
+```bash
+uv tool install prek
+```
+
 ## 🧠 About SPICE
 
 SPICE is a system developed by NASA for space mission geometry.
