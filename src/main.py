@@ -1,36 +1,32 @@
 from pathlib import Path
 
+from animation import animate_moving_point_on_static_trajectory
+from bodies import build_body_ellipsoid
 from config import (
-    META_KERNEL,
-    DEFAULT_START_UTC,
-    DEFAULT_END_UTC,
-    DEFAULT_STEP_IN_SECONDS,
-    DEFAULT_FRAME,
-    DEFAULT_ABCORR,
+    ANIM_END_UTC,
+    ANIM_START_UTC,
+    ANIM_STEP_IN_SECONDS,
     CASSINI_NAME,
+    DEFAULT_END_UTC,
+    DEFAULT_START_UTC,
+    DEFAULT_STEP_IN_SECONDS,
+    META_KERNEL,
     SATURN_NAME,
     TITAN_NAME,
 )
 from spice_loader import clear_kernels, load_kernels
 from time_utilis import generate_et_range
 from trajectory import build_trajectory_dataframe
-from analysis import (
-    add_relative_days,
-    find_global_max,
-    find_global_min,
-    build_distance_dataframe,
-)
-
 from visualization import (
+    ensure_output_dir,
     plot_trajectory_3d,
     plot_two_trajectories_3d,
-    ensure_output_dir,
 )
-from bodies import build_body_ellipsoid
 
 
 def main() -> None:
     output_dir = Path("output/plots/figures")
+    output_anim_dir = Path("output/animation")
     ensure_output_dir(output_dir)
     load_kernels(META_KERNEL)
     try:
@@ -42,9 +38,6 @@ def main() -> None:
         )
         titan_df = build_trajectory_dataframe(
             target=TITAN_NAME, observer=SATURN_NAME, ets=ets
-        )
-        cassini_titan_distance_df = build_distance_dataframe(
-            cassini_df, titan_df, "Cassini-Titan"
         )
         saturn_body = build_body_ellipsoid(
             body_name=SATURN_NAME, center_km=(0.0, 0.0, 0.0)
@@ -64,7 +57,36 @@ def main() -> None:
             output_path=output_dir / "Cassini-Titan3d.html",
             central_body=saturn_body,
         )
-        print("Analysis complete.Figures saved to output/figures")
+        ets_anim = generate_et_range(ANIM_START_UTC, ANIM_END_UTC, ANIM_STEP_IN_SECONDS)
+        cassini_anim_df = build_trajectory_dataframe(
+            target=CASSINI_NAME, observer=SATURN_NAME, ets=ets_anim
+        )
+        # animate_one_object_with_central_body_pyvista(
+        #     df=cassini_anim_df,
+        #     title="Cassini trajectory around Saturn",
+        #     output_path=output_anim_dir / "cassini_pyvista.mp4",
+        #     central_body=saturn_body,
+        #     central_body_scale=1.0,
+        #     frame_step=5,
+        #     points_between=3,
+        #     fps=30,
+        #     duration_seconds=15,
+        # )
+        animate_moving_point_on_static_trajectory(
+            df=cassini_anim_df,
+            title="Cassini trajectory around Saturn",
+            output_path=output_anim_dir / "cassini_trajectory.html",
+            central_body=saturn_body,
+            central_body_scale=1.0,
+            frame_step=2,
+            points_between=3,
+            animation_frames=700,
+            frame_duration_ms=11,
+        )
+        print(
+            "Analysis complete.Figures saved to output/figures "
+            "and animation saved to output/animation"
+        )
     finally:
         clear_kernels()
 
