@@ -1,6 +1,7 @@
-import pandas as pd
 from typing import cast
+
 import numpy as np
+import pandas as pd
 
 SECONDS_IN_A_DAY: float = 86400.0  # number of seconds in a day
 

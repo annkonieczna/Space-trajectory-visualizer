@@ -1,6 +1,7 @@
-import spiceypy as spice
-import numpy as np
 from typing import cast
+
+import numpy as np
+import spiceypy as spice
 
 
 def utc_to_et(utc_str: str) -> float:

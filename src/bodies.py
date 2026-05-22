@@ -1,6 +1,7 @@
+from dataclasses import dataclass
+
 import numpy as np
 import spiceypy as spice
-from dataclasses import dataclass
 
 
 @dataclass(
@@ -40,7 +41,8 @@ def build_body_ellipsoid(
 def create_ellipsoid_mesh(
     ellipsoid: BodyEllipsoid, number_of_points: int = 100, scale: float = 1.0
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Function responsible for scaling the radius of the planet and creating  x, y, z mesh arrays for plotting a triaxial ellipsoid."""
+    """Function responsible for scaling the radius of the planet and
+    creating  x, y, z mesh arrays for plotting a triaxial ellipsoid."""
     rx, ry, rz = ellipsoid.radii_km * scale  # radious points
     cx, cy, cz = ellipsoid.center_km  # center points
     u = np.linspace(
@@ -51,5 +53,5 @@ def create_ellipsoid_mesh(
     )  # transition angle from the North Pole to the South Pole
     x = cx + rx * (np.outer(np.cos(u), np.sin(v)))  # spherical coordinates
     y = cy + ry * (np.outer(np.sin(u), np.sin(v)))
-    z = cz + rz * np.outer( np.ones_like(u), np.cos(v))
+    z = cz + rz * np.outer(np.ones_like(u), np.cos(v))
     return x, y, z
