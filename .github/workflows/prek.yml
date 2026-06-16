@@ -1,0 +1,20 @@
+name: Prek checks
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  prek:
+    name: Run prek hooks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Run prek
+        uses: j178/prek-action@v2

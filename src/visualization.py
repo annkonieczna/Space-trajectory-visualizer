@@ -1,7 +1,9 @@
+from itertools import cycle
 from pathlib import Path
+
 import pandas as pd
 import plotly.graph_objects as go
-from itertools import cycle
+
 from bodies import BodyEllipsoid, create_ellipsoid_mesh
 
 starting_point_colours = cycle(
@@ -41,9 +43,8 @@ def plot_trajectory_3d(
     )
     fig.add_trace(  # add the Starting Point
         go.Scatter3d(
-            x=[
-                df["x_km"].iloc[0]
-            ],  # the extra brackets bc in plotly we're required to give an array of points
+            x=[df["x_km"].iloc[0]],  # the extra brackets bc in plotly
+            # we're required to give an array of points
             y=[df["y_km"].iloc[0]],
             z=[df["z_km"].iloc[0]],
             mode="markers",

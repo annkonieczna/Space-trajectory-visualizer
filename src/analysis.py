@@ -1,6 +1,7 @@
-import pandas as pd
 from typing import cast
+
 import numpy as np
+import pandas as pd
 
 SECONDS_IN_A_DAY: float = 86400.0  # number of seconds in a day
 
@@ -9,6 +10,9 @@ def add_relative_days(df: pd.DataFrame) -> pd.DataFrame:
     """
     Adds column with a number of days from the beggining of the analysis
     """
+    if df.empty:
+        raise ValueError("Cannot calculate relative days for an empty dataframe.")
+
     df = df.copy()
     start_et = df["et"].iloc[0]
     df["days_from_start"] = (df["et"] - start_et) / SECONDS_IN_A_DAY
@@ -37,6 +41,12 @@ def build_distance_dataframe(
     """Function that is given dwo dataframes and it calculates the distance between
     two objects in the same reference frame and are relative to the same observer
     data frame looks like: et utc x y z"""
+    if len(df_a) != len(df_b):
+        raise ValueError("Both dataframes must contain the same number of rows.")
+
+    if not np.allclose(df_a["et"].to_numpy(), df_b["et"].to_numpy()):
+        raise ValueError("Both dataframes must describe the same epochs.")
+
     coords_a = df_a[["x_km", "y_km", "z_km"]].to_numpy()
     coords_b = df_b[["x_km", "y_km", "z_km"]].to_numpy()
     distances = np.linalg.norm(

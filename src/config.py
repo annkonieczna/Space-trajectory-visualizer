@@ -11,10 +11,15 @@ DEFAULT_START_UTC = "2017-04-22T00:00:00"  # T as a seperator between date and a
 DEFAULT_END_UTC = "2017-09-15T10:00:00"
 DEFAULT_STEP_IN_SECONDS = 300
 
+# time settings for animation
+ANIM_START_UTC = "2017-07-15T00:00:00"  # T as a seperator between date and an hour
+ANIM_END_UTC = "2017-09-15T10:00:00"
+ANIM_STEP_IN_SECONDS = 300
+
 # Reference frame
 
-DEFAULT_FRAME = "J2000"  # reference frame I'll be using most of the time, it's an inertial reference frame
-# so it's useful for calculating most of the
+DEFAULT_FRAME = "J2000"  # reference frame I'll be using most of the time,
+# it's an inertial reference frame so it's useful for calculating most of the
 DEFAULT_ABCORR = "NONE"  # the aberration correction we want to apply
 # in my case I want to have the geometrical state of the object relative to the observer
 

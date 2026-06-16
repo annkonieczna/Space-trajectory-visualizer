@@ -12,7 +12,7 @@ Cassini–Huygens (2017)
 ---
 
 ## 👩‍💻 Author
-- Anna Konieczna 
+- Anna Konieczna
 
 
 ## ⚙️ Setup Instructions
@@ -59,8 +59,8 @@ data/kernels/
 The project uses generic kernels provided by NASA NAIF:
 
 ### Time
-- naif0012.tls — time conversion 
-### Planetary data 
+- naif0012.tls — time conversion
+### Planetary data
 - pck00011.tpc — planetary constants
 - de442s.bsp — planetary ephemerides
 - sat458.bsp — Saturn system (including its moons)
@@ -80,6 +80,16 @@ After setup and downloading kernels:
 ```bash
 python src/main.py
 ```
+## Code quality
+
+This project uses `prek`, a Rust-based drop-in replacement for `pre-commit`, to run formatting and linting checks.
+
+Install prek:
+
+```bash
+uv tool install prek
+```
+
 ## 🧠 About SPICE
 
 SPICE is a system developed by NASA for space mission geometry.
