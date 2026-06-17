@@ -90,7 +90,7 @@ After setup and downloading kernels, the project can be used in two ways.
 The main interactive version of the project is the Streamlit application:
 
 ```bash
-streamlit run src/app.py
+streamlit run app.py
 ```
 
 The interface allows the user to:
@@ -108,7 +108,7 @@ The interface allows the user to:
 The project can also be run as a script:
 
 ```bash
-python src/main.py
+python -m src.main
 ```
 
 This generates plots and animation files in the `output/` directory.
