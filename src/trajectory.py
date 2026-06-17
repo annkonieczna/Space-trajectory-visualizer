@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 import spiceypy as spice
 
-from config import DEFAULT_ABCORR, DEFAULT_FRAME
-from time_utilis import et_to_utc
+from src.config import DEFAULT_ABCORR, DEFAULT_FRAME
+from src.time_utilis import et_to_utc
 
 
 def get_state_at_epoch(

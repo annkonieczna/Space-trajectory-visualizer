@@ -4,7 +4,72 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
-from bodies import BodyEllipsoid, create_ellipsoid_mesh
+from src.bodies import BodyEllipsoid, create_ellipsoid_mesh
+
+
+def apply_dark_animation_layout(fig: go.Figure, title: str) -> None:
+    fig.update_layout(
+        template="plotly_dark",
+        title=title,
+        scene=dict(
+            xaxis_title="X [km]",
+            yaxis_title="Y [km]",
+            zaxis_title="Z [km]",
+            aspectmode="data",
+            bgcolor="#0e1117",
+            xaxis=dict(backgroundcolor="#0e1117", gridcolor="#334155"),
+            yaxis=dict(backgroundcolor="#0e1117", gridcolor="#334155"),
+            zaxis=dict(backgroundcolor="#0e1117", gridcolor="#334155"),
+        ),
+        paper_bgcolor="#0e1117",
+        plot_bgcolor="#0e1117",
+        font=dict(color="#f8fafc"),
+        margin=dict(l=0, r=0, t=70, b=70),
+        height=820,
+    )
+
+
+def animation_controls(frame_duration_ms: int) -> list[dict]:
+    return [
+        dict(
+            type="buttons",
+            direction="left",
+            x=0.1,
+            y=0,
+            active=-1,
+            showactive=False,
+            bgcolor="#475f7d",
+            bordercolor="#64748b",
+            font=dict(color="#ffffff"),
+            buttons=[
+                dict(
+                    label="Play",
+                    method="animate",
+                    args=[
+                        None,
+                        dict(
+                            frame=dict(duration=frame_duration_ms, redraw=True),
+                            transition=dict(duration=0),
+                            fromcurrent=True,
+                            mode="immediate",
+                        ),
+                    ],
+                ),
+                dict(
+                    label="Pause",
+                    method="animate",
+                    args=[
+                        [None],
+                        dict(
+                            frame=dict(duration=0, redraw=True),
+                            transition=dict(duration=0),
+                            mode="immediate",
+                        ),
+                    ],
+                ),
+            ],
+        )
+    ]
 
 
 def interpolate_trajectory(
@@ -89,14 +154,14 @@ def add_body_ellipsoid_trace(
 def animate_moving_point_on_static_trajectory(
     df: pd.DataFrame,
     title: str,
-    output_path: Path,
+    output_path: Path | None = None,
     central_body: BodyEllipsoid | None = None,
     central_body_scale: float = 1.0,
     animation_frames: int = 300,
     frame_duration_ms: int = 15,
     frame_step: int = 2,
     points_between: int = 3,
-) -> None:
+) -> go.Figure:
     fig = go.Figure()
 
     if central_body is not None:
@@ -161,7 +226,7 @@ def animate_moving_point_on_static_trajectory(
             z=[df["z_km"].iloc[0]],
             mode="markers",
             name="Start",
-            marker=dict(color="green", size=1, symbol="diamond"),
+            marker=dict(color="green", size=2, symbol="diamond"),
         )
     )
 
@@ -173,7 +238,7 @@ def animate_moving_point_on_static_trajectory(
             z=[df["z_km"].iloc[-1]],
             mode="markers",
             name="End",
-            marker=dict(color="red", size=1, symbol="diamond"),
+            marker=dict(color="red", size=2, symbol="diamond"),
         )
     )
 
@@ -204,52 +269,15 @@ def animate_moving_point_on_static_trajectory(
 
     fig.frames = frames
 
+    apply_dark_animation_layout(fig, title)
     fig.update_layout(
-        title=title,
-        scene=dict(
-            xaxis_title="X [km]",
-            yaxis_title="Y [km]",
-            zaxis_title="Z [km]",
-            aspectmode="data",
-        ),
-        updatemenus=[
-            dict(
-                type="buttons",
-                direction="left",
-                x=0.1,
-                y=0,
-                buttons=[
-                    dict(
-                        label="Play",
-                        method="animate",
-                        args=[
-                            None,
-                            dict(
-                                frame=dict(duration=frame_duration_ms, redraw=True),
-                                transition=dict(duration=0),
-                                fromcurrent=True,
-                                mode="immediate",
-                            ),
-                        ],
-                    ),
-                    dict(
-                        label="Pause",
-                        method="animate",
-                        args=[
-                            [None],
-                            dict(
-                                frame=dict(duration=0, redraw=True),
-                                transition=dict(duration=0),
-                                mode="immediate",
-                            ),
-                        ],
-                    ),
-                ],
-            )
-        ],
+        updatemenus=animation_controls(frame_duration_ms),
     )
 
-    fig.write_html(str(output_path))
+    if output_path is not None:
+        fig.write_html(str(output_path))
+
+    return fig
 
 
 def animate_two_moving_points_on_static_trajectory(
@@ -258,14 +286,14 @@ def animate_two_moving_points_on_static_trajectory(
     title: str,
     title_a: str,
     title_b: str,
-    output_path: Path,
+    output_path: Path | None = None,
     central_body: BodyEllipsoid | None = None,
     central_body_scale: float = 1.0,
     animation_frames: int = 300,
     frame_duration_ms: int = 15,
     frame_step: int = 2,
     points_between: int = 3,
-) -> None:
+) -> go.Figure:
     fig = go.Figure()
 
     if central_body is not None:
@@ -319,7 +347,7 @@ def animate_two_moving_points_on_static_trajectory(
             z=[animated_df_a["z_km"].iloc[0]],
             mode="markers",
             name=f"Current position of {title_a}",
-            marker=dict(color="blue", size=3),
+            marker=dict(color="red", size=5),
         )
     )
 
@@ -331,7 +359,7 @@ def animate_two_moving_points_on_static_trajectory(
             z=[df_a["z_km"].iloc[0]],
             mode="markers",
             name=f"Start point od {title_a}",
-            marker=dict(color="green", size=1, symbol="diamond"),
+            marker=dict(color="green", size=2, symbol="diamond"),
         )
     )
 
@@ -343,7 +371,7 @@ def animate_two_moving_points_on_static_trajectory(
             z=[df_a["z_km"].iloc[-1]],
             mode="markers",
             name=f"End point of {title_a} ",
-            marker=dict(color="red", size=3, symbol="diamond"),
+            marker=dict(color="violet", size=2, symbol="diamond"),
         )
     )
 
@@ -391,7 +419,7 @@ def animate_two_moving_points_on_static_trajectory(
             z=[animated_df_b["z_km"].iloc[0]],
             mode="markers",
             name=f"Current position of {title_b}",
-            marker=dict(color="purple", size=5),
+            marker=dict(color="orange", size=5),
         )
     )
 
@@ -403,7 +431,7 @@ def animate_two_moving_points_on_static_trajectory(
             z=[df_b["z_km"].iloc[0]],
             mode="markers",
             name=f"Start point of {title_b}",
-            marker=dict(color="green", size=1, symbol="diamond"),
+            marker=dict(color="white", size=2, symbol="diamond"),
         )
     )
 
@@ -415,7 +443,7 @@ def animate_two_moving_points_on_static_trajectory(
             z=[df_b["z_km"].iloc[-1]],
             mode="markers",
             name=f"End point of {title_b}",
-            marker=dict(color="red", size=1, symbol="diamond"),
+            marker=dict(color="aqua", size=2, symbol="diamond"),
         )
     )
     number_of_frames = min(len(animated_df_a), len(animated_df_b))
@@ -436,8 +464,8 @@ def animate_two_moving_points_on_static_trajectory(
                         z=[row_a["z_km"]],
                         mode="markers",
                         marker=dict(
-                            color="blue",
-                            size=3,
+                            color="red",
+                            size=5,
                             symbol="circle",
                         ),
                     ),
@@ -446,7 +474,7 @@ def animate_two_moving_points_on_static_trajectory(
                         y=[row_b["y_km"]],
                         z=[row_b["z_km"]],
                         mode="markers",
-                        marker=dict(color="purple", size=5),
+                        marker=dict(color="orange", size=5),
                     ),
                 ],
                 traces=[current_point_trace_a_index, current_point_trace_b_index],
@@ -454,52 +482,15 @@ def animate_two_moving_points_on_static_trajectory(
         )
 
     fig.frames = frames
+    apply_dark_animation_layout(fig, title)
     fig.update_layout(
-        title=title,
-        scene=dict(
-            xaxis_title="X [km]",
-            yaxis_title="Y [km]",
-            zaxis_title="Z [km]",
-            aspectmode="data",
-        ),
-        updatemenus=[
-            dict(
-                type="buttons",
-                direction="left",
-                x=0.1,
-                y=0,
-                buttons=[
-                    dict(
-                        label="Play",
-                        method="animate",
-                        args=[
-                            None,
-                            dict(
-                                frame=dict(duration=frame_duration_ms, redraw=True),
-                                transition=dict(duration=0),
-                                fromcurrent=True,
-                                mode="immediate",
-                            ),
-                        ],
-                    ),
-                    dict(
-                        label="Pause",
-                        method="animate",
-                        args=[
-                            [None],
-                            dict(
-                                frame=dict(duration=0, redraw=True),
-                                transition=dict(duration=0),
-                                mode="immediate",
-                            ),
-                        ],
-                    ),
-                ],
-            )
-        ],
+        updatemenus=animation_controls(frame_duration_ms),
     )
 
-    fig.write_html(str(output_path))
+    if output_path is not None:
+        fig.write_html(str(output_path))
+
+    return fig
 
 
 def animate_two_moving_points(
@@ -508,14 +499,14 @@ def animate_two_moving_points(
     title: str,
     title_a: str,
     title_b: str,
-    output_path: Path,
+    output_path: Path | None = None,
     central_body: BodyEllipsoid | None = None,
     central_body_scale: float = 1.0,
     animation_frames: int = 300,
     frame_duration_ms: int = 15,
     frame_step: int = 2,
     points_between: int = 3,
-) -> None:
+) -> go.Figure:
     fig = go.Figure()
 
     if central_body is not None:
@@ -569,7 +560,7 @@ def animate_two_moving_points(
             z=[animated_df_a["z_km"].iloc[0]],
             mode="markers",
             name=f"Current position of {title_a}",
-            marker=dict(color="blue", size=3),
+            marker=dict(color="red", size=5),
         )
     )
 
@@ -617,7 +608,7 @@ def animate_two_moving_points(
             z=[animated_df_b["z_km"].iloc[0]],
             mode="markers",
             name=f"Current position of {title_b}",
-            marker=dict(color="purple", size=3),
+            marker=dict(color="orange", size=5),
         )
     )
     number_of_frames = min(len(animated_df_a), len(animated_df_b))
@@ -638,8 +629,8 @@ def animate_two_moving_points(
                         z=[row_a["z_km"]],
                         mode="markers",
                         marker=dict(
-                            color="blue",
-                            size=3,
+                            color="red",
+                            size=5,
                             symbol="circle",
                         ),
                     ),
@@ -648,7 +639,7 @@ def animate_two_moving_points(
                         y=[row_b["y_km"]],
                         z=[row_b["z_km"]],
                         mode="markers",
-                        marker=dict(color="purple", size=3),
+                        marker=dict(color="orange", size=5),
                     ),
                 ],
                 traces=[current_point_trace_a_index, current_point_trace_b_index],
@@ -656,49 +647,12 @@ def animate_two_moving_points(
         )
 
     fig.frames = frames
+    apply_dark_animation_layout(fig, title)
     fig.update_layout(
-        title=title,
-        scene=dict(
-            xaxis_title="X [km]",
-            yaxis_title="Y [km]",
-            zaxis_title="Z [km]",
-            aspectmode="data",
-        ),
-        updatemenus=[
-            dict(
-                type="buttons",
-                direction="left",
-                x=0.1,
-                y=0,
-                buttons=[
-                    dict(
-                        label="Play",
-                        method="animate",
-                        args=[
-                            None,
-                            dict(
-                                frame=dict(duration=frame_duration_ms, redraw=True),
-                                transition=dict(duration=0),
-                                fromcurrent=True,
-                                mode="immediate",
-                            ),
-                        ],
-                    ),
-                    dict(
-                        label="Pause",
-                        method="animate",
-                        args=[
-                            [None],
-                            dict(
-                                frame=dict(duration=0, redraw=True),
-                                transition=dict(duration=0),
-                                mode="immediate",
-                            ),
-                        ],
-                    ),
-                ],
-            )
-        ],
+        updatemenus=animation_controls(frame_duration_ms),
     )
 
-    fig.write_html(str(output_path))
+    if output_path is not None:
+        fig.write_html(str(output_path))
+
+    return fig
