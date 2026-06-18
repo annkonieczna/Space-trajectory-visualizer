@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
-from src.bodies import BodyEllipsoid, create_ellipsoid_mesh
+from src.calculations.bodies import BodyEllipsoid, create_ellipsoid_mesh
 
 
 def apply_dark_animation_layout(fig: go.Figure, title: str) -> None:
