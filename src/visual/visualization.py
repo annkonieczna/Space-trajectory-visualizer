@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import plotly.graph_objects as go
 
-from src.bodies import BodyEllipsoid, create_ellipsoid_mesh
+from src.calculations.bodies import BodyEllipsoid, create_ellipsoid_mesh
 
 
 def ensure_output_dir(path: Path) -> None:

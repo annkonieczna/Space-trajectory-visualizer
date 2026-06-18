@@ -1,10 +1,8 @@
 from pathlib import Path
 
-from src.animation import (
-    animate_moving_point_on_static_trajectory,
-    animate_two_moving_points_on_static_trajectory,
-)
-from src.bodies import build_body_ellipsoid
+from src.calculations.bodies import build_body_ellipsoid
+from src.calculations.time_utilis import generate_et_range
+from src.calculations.trajectory import build_trajectory_dataframe
 from src.config import (
     ANIM_END_UTC,
     ANIM_START_UTC,
@@ -17,10 +15,12 @@ from src.config import (
     SATURN_NAME,
     TITAN_NAME,
 )
-from src.spice_loader import clear_kernels, load_kernels
-from src.time_utilis import generate_et_range
-from src.trajectory import build_trajectory_dataframe
-from src.visualization import (
+from src.kernel_handling.spice_loader import clear_kernels, load_kernels
+from src.visual.animation import (
+    animate_moving_point_on_static_trajectory,
+    animate_two_moving_points_on_static_trajectory,
+)
+from src.visual.visualization import (
     ensure_output_dir,
     plot_trajectory_3d,
     plot_two_trajectories_3d,

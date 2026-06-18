@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 import spiceypy as spice
 
+from src.calculations.time_utilis import et_to_utc
 from src.config import DEFAULT_ABCORR, DEFAULT_FRAME
-from src.time_utilis import et_to_utc
 
 
 def get_state_at_epoch(
@@ -18,7 +18,7 @@ def get_state_at_epoch(
     """Function that detemines the state of our targetin reference
     too the observer for a specific moment in time
     It returns a vector [x,y,z,vx,vy,vz] (position and velocity vector),
-    and float light_time-- one way light time between the observer and
+    and float light_time - one way light time between the observer and
     target in seconds.
     Units are km and km/sec and sec"""
     state, light_time = spice.spkezr(target, et, frame, abcorr, observer)

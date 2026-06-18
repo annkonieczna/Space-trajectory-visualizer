@@ -3,17 +3,15 @@ from datetime import date, datetime, time
 import pandas as pd
 import streamlit as st
 
-from src.analysis import (
+from src.calculations.analysis import (
     add_relative_days,
     build_distance_dataframe,
     find_global_max,
     find_global_min,
 )
-from src.animation import (
-    animate_moving_point_on_static_trajectory,
-    animate_two_moving_points_on_static_trajectory,
-)
-from src.bodies import build_body_ellipsoid
+from src.calculations.bodies import build_body_ellipsoid
+from src.calculations.time_utilis import generate_et_range
+from src.calculations.trajectory import build_trajectory_dataframe
 from src.config import (
     CASSINI_NAME,
     DEFAULT_END_UTC,
@@ -23,10 +21,12 @@ from src.config import (
     SATURN_NAME,
     TITAN_NAME,
 )
-from src.spice_loader import load_kernels
-from src.time_utilis import generate_et_range
-from src.trajectory import build_trajectory_dataframe
-from src.visualization import (
+from src.kernel_handling.spice_loader import load_kernels
+from src.visual.animation import (
+    animate_moving_point_on_static_trajectory,
+    animate_two_moving_points_on_static_trajectory,
+)
+from src.visual.visualization import (
     create_distance_figure,
     create_trajectory_3d_figure,
     create_two_trajectories_3d_figure,
@@ -111,17 +111,17 @@ def create_single_animation_figure(
     central_body,
     central_body_scale: float,
 ):
-    frame_duration_ms = 25
+    frame_duration_ms = 11
     return animate_moving_point_on_static_trajectory(
         df=df,
         title=f"{target} trajectory relative to {observer}",
         output_path=None,
         central_body=central_body,
         central_body_scale=central_body_scale,
-        animation_frames=300,
+        animation_frames=700,
         frame_duration_ms=frame_duration_ms,
         frame_step=2,
-        points_between=2,
+        points_between=3,
     )
 
 
@@ -134,7 +134,7 @@ def create_comparison_animation_figure(
     central_body,
     central_body_scale: float,
 ):
-    frame_duration_ms = 25
+    frame_duration_ms = 11
     return animate_two_moving_points_on_static_trajectory(
         df_a=df_a,
         df_b=df_b,
@@ -144,10 +144,10 @@ def create_comparison_animation_figure(
         output_path=None,
         central_body=central_body,
         central_body_scale=central_body_scale,
-        animation_frames=300,
+        animation_frames=700,
         frame_duration_ms=frame_duration_ms,
         frame_step=2,
-        points_between=2,
+        points_between=3,
     )
 
 

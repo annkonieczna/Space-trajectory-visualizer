@@ -62,6 +62,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [#19]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/19
 
+## [0.1.0] - 18-06-2026
+
+### Added
+
+- [feat] Add a streamlit user interface that integrates plots, animation and data analysis ([#22])
+
+[#22]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/22
+
+- [feat] Handle relative kernel paths during SPICE kernel loading ([#25])
+
+[#25]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/25
+
+- [feat] Change imports to package ([#26])
+
+[#26]: https://github.com/annkonieczna/Space-trajectory-visualizer/issues/26
+
 
 
 ### Notes
