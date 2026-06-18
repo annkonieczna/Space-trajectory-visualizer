@@ -53,7 +53,7 @@ This project does NOT include SPICE kernels in the repository due to their size.
 Download them using:
 ```bash
 
-python src/download_kernels.py
+python -m src.kernel_handling.download_kernels
 ```
 
 This will save kernels into:
