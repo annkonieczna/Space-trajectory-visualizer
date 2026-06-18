@@ -111,17 +111,17 @@ def create_single_animation_figure(
     central_body,
     central_body_scale: float,
 ):
-    frame_duration_ms = 25
+    frame_duration_ms = 11
     return animate_moving_point_on_static_trajectory(
         df=df,
         title=f"{target} trajectory relative to {observer}",
         output_path=None,
         central_body=central_body,
         central_body_scale=central_body_scale,
-        animation_frames=300,
+        animation_frames=700,
         frame_duration_ms=frame_duration_ms,
         frame_step=2,
-        points_between=2,
+        points_between=3,
     )
 
 
@@ -134,7 +134,7 @@ def create_comparison_animation_figure(
     central_body,
     central_body_scale: float,
 ):
-    frame_duration_ms = 25
+    frame_duration_ms = 11
     return animate_two_moving_points_on_static_trajectory(
         df_a=df_a,
         df_b=df_b,
@@ -144,10 +144,10 @@ def create_comparison_animation_figure(
         output_path=None,
         central_body=central_body,
         central_body_scale=central_body_scale,
-        animation_frames=300,
+        animation_frames=700,
         frame_duration_ms=frame_duration_ms,
         frame_step=2,
-        points_between=2,
+        points_between=3,
     )
 
 
